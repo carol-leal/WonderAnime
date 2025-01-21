@@ -1,5 +1,4 @@
 const { REST, Routes } = require("discord.js");
-const { configDotenv } = require("dotenv");
 const fs = require("node:fs");
 const path = require("node:path");
 require("dotenv").config();
@@ -37,10 +36,7 @@ const rest = new REST().setToken(process.env.DISCORD_TOKEN);
     );
 
     const data = await rest.put(
-      Routes.applicationGuildCommands(
-        process.env.APPLICATION_ID,
-        process.env.SERVER_ID
-      ),
+      Routes.applicationCommands(process.env.APPLICATION_ID),
       { body: commands }
     );
 
