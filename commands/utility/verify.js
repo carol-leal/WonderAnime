@@ -18,15 +18,6 @@ module.exports = {
   async execute(interaction) {
     const modsRole = database.getRole(interaction.guild.id);
 
-    if (!modsRole) {
-      await interaction.reply({
-        content:
-          "No mod role is set up for this server. Please ask the server administrator to set up the mod role.",
-        flags: MessageFlags.Ephemeral,
-      });
-      return;
-    }
-
     if (
       !interaction.member.roles.cache.has(modsRole) &&
       !interaction.member.permissions.has(

@@ -4,6 +4,7 @@ const {
   PermissionsBitField,
 } = require("discord.js");
 require("dotenv").config();
+database = require("../../database");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -13,8 +14,12 @@ module.exports = {
     const clientId = process.env.ANILIST_CLIENT_ID;
     const redirect_uri = process.env.ANILIST_REDIRECT_URI;
     const modsRole = database.getRole(interaction.guild.id);
-
-    if (!modsRole) {
+    if (
+      !interaction.member.permissions.has(
+        PermissionsBitField.Flags.Administrator
+      ) ||
+      !modsRole
+    ) {
       await interaction.reply({
         content:
           "No mod role is set up for this server. Please ask the server administrator to set up the mod role.",
@@ -22,7 +27,6 @@ module.exports = {
       });
       return;
     }
-
     if (
       !interaction.member.roles.cache.has(modsRole) &&
       !interaction.member.permissions.has(
