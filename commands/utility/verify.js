@@ -1,5 +1,9 @@
 const database = require("../../database");
-const { SlashCommandBuilder } = require("discord.js");
+const {
+  SlashCommandBuilder,
+  PermissionsBitField,
+  MessageFlags,
+} = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -12,7 +16,29 @@ module.exports = {
         .setRequired(true)
     ),
   async execute(interaction) {
-    console.log("Starting /verify command");
+    const modsRole = database.getRole(interaction.guild.id);
+
+    if (!modsRole) {
+      await interaction.reply({
+        content:
+          "No mod role is set up for this server. Please ask the server administrator to set up the mod role.",
+        flags: MessageFlags.Ephemeral,
+      });
+      return;
+    }
+
+    if (
+      !interaction.member.roles.cache.has(modsRole) &&
+      !interaction.member.permissions.has(
+        PermissionsBitField.Flags.Administrator
+      )
+    ) {
+      await interaction.reply({
+        content: "You do not have permission to use this command.",
+        flags: MessageFlags.Ephemeral,
+      });
+      return;
+    }
 
     const pin = interaction.options.getString("pin");
     const serverId = interaction.guild.id;

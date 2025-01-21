@@ -28,15 +28,9 @@ module.exports = {
         },
         {
           name: "Support",
-          value:
-            "If you are having trouble with the bot, please contact the owner.",
+          value: `If you are having trouble with the bot, please contact <@${botOwnerId}>`,
         }
-      )
-      .setTimestamp()
-      .setFooter({
-        text: "Bot Status",
-        iconURL: interaction.client.user.displayAvatarURL(),
-      });
+      );
 
     await interaction.reply({ embeds: [embed] });
   },

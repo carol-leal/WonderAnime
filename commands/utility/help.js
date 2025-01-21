@@ -141,6 +141,29 @@ The \`/progress\` command allows you to track your anime progress on AniList.
         help: `
 This is the \`/help\` command, which provides information about available commands.
         `,
+        verify: `
+        The \`/verify\` command links your AniList account to the bot using the PIN provided during the login process.
+        
+        **Steps to Use:**
+        1. Ensure you have completed the login process using \`/login\`. AniList will provide you with a PIN.
+        2. Type \`/verify\` and provide the PIN.
+        3. The bot will verify the PIN and link your AniList account.
+        4. Once verified, you can start managing your AniList account through the bot.
+        
+        **Example:**
+        \`/verify pin: 123456\` will verify the provided PIN and link your AniList account.
+                `,
+        setup: `
+                The \`/setup\` command allows the server administrator to configure the role that can use bot commands.
+                
+                **Steps to Use:**
+                1. Ensure you have \`Administrator\` permissions in the server.
+                2. Type \`/setup\` and provide the ID of the role you want to allow access to certain bot commands.
+                3. The bot will store the role ID and notify you of successful configuration.
+                
+                **Example:**
+                \`/setup modsroleid: 987654321098765432\` will set the role with ID \`987654321098765432\` as the mod role for bot commands.
+                        `,
       };
 
       const embed = new EmbedBuilder()
@@ -162,11 +185,7 @@ This is the \`/help\` command, which provides information about available comman
               "No additional details available.",
           }
         )
-        .setTimestamp()
-        .setFooter({
-          text: "Command Help",
-          iconURL: interaction.client.user.displayAvatarURL(),
-        });
+        .setTimestamp();
 
       await interaction.reply({ embeds: [embed] });
     } else {
