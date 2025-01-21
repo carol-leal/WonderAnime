@@ -14,12 +14,16 @@ module.exports = {
     const serverId = interaction.guild.id;
     const token = database.getToken(serverId);
 
+    const application = await interaction.client.application.fetch();
+    const botOwnerId = application.owner.id;
+    const botInfo = interaction.client.user.username;
+
     if (token) {
       isLoggedIn = true;
     }
 
     const embed = new EmbedBuilder()
-      .setTitle("Bot Status")
+      .setTitle(`${botInfo} - Status`)
       .setColor("#00ff00")
       .addFields(
         {

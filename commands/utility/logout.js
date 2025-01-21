@@ -1,4 +1,8 @@
-const { SlashCommandBuilder, PermissionsBitField } = require("discord.js");
+const {
+  SlashCommandBuilder,
+  PermissionsBitField,
+  MessageFlags,
+} = require("discord.js");
 const database = require("../../database");
 
 module.exports = {
@@ -32,13 +36,18 @@ module.exports = {
       return;
     }
     if (!token) {
-      await interaction.reply(
-        "No AniList account is linked for this server. Use /login to link one."
-      );
+      await interaction.reply({
+        content:
+          "No AniList account is linked for this server. Use /login to link one.",
+        flags: MessageFlags.Ephemeral,
+      });
       return;
     }
 
     database.removeToken(serverId);
-    await interaction.reply("Successfully logged out of AniList.");
+    await interaction.reply({
+      content: "Successfully logged out of AniList.",
+      flags: MessageFlags.Ephemeral,
+    });
   },
 };

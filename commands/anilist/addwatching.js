@@ -48,9 +48,11 @@ module.exports = {
       return;
     }
     if (!token) {
-      await interaction.reply(
-        "No AniList account is linked for this server. Use /login to link one."
-      );
+      await interaction.reply({
+        content:
+          "No AniList account is linked for this server. Use /login to link one.",
+        flags: MessageFlags.Ephemeral,
+      });
       return;
     }
 
@@ -92,7 +94,7 @@ module.exports = {
       if (!animeList.length) {
         await interaction.reply({
           content: "Anime not found. Please check the title and try again.",
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         return;
       }
@@ -168,6 +170,7 @@ module.exports = {
             interaction.editReply({
               content: "You did not select any anime in time.",
               components: [],
+              flags: MessageFlags.Ephemeral,
             });
           }
         });
@@ -176,7 +179,7 @@ module.exports = {
       console.error(error);
       await interaction.reply({
         content: "Failed to add the anime to your currently watching list.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     }
   },
@@ -218,7 +221,7 @@ async function processAnimeSelection(
         await interaction.reply({
           content:
             "Failed to retrieve AniList username. Please make sure the bot is logged in.",
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
       } else {
         await interaction.editReply({
@@ -274,7 +277,7 @@ async function processAnimeSelection(
           content: `You are already watching "${
             anime.title.english || anime.title.romaji
           }".`,
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
       } else {
         await interaction.editReply({
@@ -293,7 +296,7 @@ async function processAnimeSelection(
     if (!editReply) {
       await interaction.reply({
         content: "Failed to process your anime selection.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     } else {
       await interaction.editReply({

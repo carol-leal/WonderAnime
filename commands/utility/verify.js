@@ -62,7 +62,6 @@ module.exports = {
       });
 
       const data = await response.json();
-      console.log("AniList response data:", data);
 
       if (!response.ok) {
         console.error(
@@ -74,20 +73,20 @@ module.exports = {
       }
 
       const accessToken = data.access_token;
-      console.log("Access token retrieved:", accessToken);
 
       // Save the token to the database
       database.saveToken(serverId, userId, accessToken);
-      console.log(
-        `Access token saved for server ${serverId} by user ${userId}`
-      );
 
-      await interaction.reply(
-        "Login successful! Your AniList account is now linked."
-      );
+      await interaction.reply({
+        content: "Login successful! Your AniList account is now linked.",
+        flags: MessageFlags.Ephemeral,
+      });
     } catch (error) {
       console.error("Error during PIN verification:", error);
-      await interaction.reply("Failed to verify PIN. Please try again.");
+      await interaction.reply({
+        content: "Failed to verify PIN. Please try again.",
+        flags: MessageFlags.Ephemeral,
+      });
     }
   },
 };

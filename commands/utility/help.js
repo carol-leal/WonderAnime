@@ -14,6 +14,7 @@ module.exports = {
   async execute(interaction) {
     const commandName = interaction.options.getString("command");
     const commands = interaction.client.commands;
+    const botInfo = interaction.client.user.username;
 
     if (commandName) {
       const command = commands.get(commandName.toLowerCase());
@@ -167,9 +168,9 @@ This is the \`/help\` command, which provides information about available comman
       };
 
       const embed = new EmbedBuilder()
-        .setTitle(`Help: /${command.data.name}`)
+        .setTitle(`${botInfo} - Help: /${command.data.name}`)
         .setDescription(command.data.description)
-        .setColor("#0099ff")
+        .setColor("#00ff00")
         .addFields(
           {
             name: "Usage",
@@ -184,30 +185,23 @@ This is the \`/help\` command, which provides information about available comman
               detailedInstructions[commandName.toLowerCase()] ||
               "No additional details available.",
           }
-        )
-        .setTimestamp();
+        );
 
       await interaction.reply({ embeds: [embed] });
     } else {
       const embed = new EmbedBuilder()
-        .setTitle("Help: List of Commands")
+        .setTitle(`${botInfo} - Help: List of Commands`)
         .setDescription(
           "Use `/help [command]` to get detailed information on a specific command."
         )
-        .setColor("#0099ff")
+        .setColor("#00ff00")
         .addFields(
           commands.map((command) => ({
             name: `/${command.data.name}`,
             value: command.data.description,
             inline: false,
           }))
-        )
-        .setTimestamp()
-        .setFooter({
-          text: "Bot Commands",
-          iconURL: interaction.client.user.displayAvatarURL(),
-        });
-
+        );
       await interaction.reply({ embeds: [embed] });
     }
   },

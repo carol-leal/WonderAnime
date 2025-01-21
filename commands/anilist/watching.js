@@ -17,9 +17,11 @@ module.exports = {
     const token = database.getToken(serverId);
 
     if (!token) {
-      await interaction.reply(
-        "No AniList account is linked for this server. Use /login to link one."
-      );
+      await interaction.reply({
+        content:
+          "No AniList account is linked for this server. Use /login to link one.",
+        flags: MessageFlags.Ephemeral,
+      });
       return;
     }
 

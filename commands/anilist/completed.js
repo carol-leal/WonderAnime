@@ -48,9 +48,11 @@ module.exports = {
     }
 
     if (!token) {
-      await interaction.reply(
-        "No AniList account is linked for this server. Use /login to link one."
-      );
+      await interaction.reply({
+        content:
+          "No AniList account is linked for this server. Use /login to link one.",
+        flags: MessageFlags.Ephemeral,
+      });
       return;
     }
 
@@ -95,7 +97,7 @@ module.exports = {
       if (!animeList.length) {
         await interaction.reply({
           content: "Anime not found. Please check the title and try again.",
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         return;
       }
@@ -171,7 +173,7 @@ module.exports = {
       console.error(error);
       await interaction.reply({
         content: "Failed to mark the anime as completed.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     }
   },
