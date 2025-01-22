@@ -14,12 +14,11 @@ module.exports = {
     const clientId = process.env.ANILIST_CLIENT_ID;
     const redirect_uri = process.env.ANILIST_REDIRECT_URI;
     const modsRole = database.getRole(interaction.guild.id);
-    if (
-      !interaction.member.permissions.has(
-        PermissionsBitField.Flags.Administrator
-      ) ||
-      !modsRole
-    ) {
+    const adminRole = interaction.member.permissions.has(
+      PermissionsBitField.Flags.Administrator
+    );
+
+    if (!adminRole && !modsRole) {
       await interaction.reply({
         content:
           "No mod role is set up for this server. Please ask the server administrator to set up the mod role.",

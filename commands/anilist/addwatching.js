@@ -25,13 +25,10 @@ module.exports = {
     const serverId = interaction.guild.id;
     const token = database.getToken(serverId);
     const modsRole = database.getRole(interaction.guild.id);
-
-    if (
-      !interaction.member.permissions.has(
-        PermissionsBitField.Flags.Administrator
-      ) ||
-      !modsRole
-    ) {
+    const adminRole = interaction.member.permissions.has(
+      PermissionsBitField.Flags.Administrator
+    );
+    if (!adminRole && !modsRole) {
       await interaction.reply({
         content:
           "No mod role is set up for this server. Please ask the server administrator to set up the mod role.",
